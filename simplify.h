@@ -2,51 +2,51 @@
 #define SIMPLIFY__H
 
 #include "parser.h"
+#include <memory>
+#include <unordered_map>
 
 namespace client {
   struct num_type {
-    num_type()
-      : is_double(false)
-    {}
-    num_type(double _value)
-      : value(_value), is_double(true)
-    {}
-
-    operator bool(){ return is_double; }
+    num_type();
+    num_type(double _value);
     bool is_double = false;
     double value = 0.0;
   };
 
-  struct num_visitor : public boost::static_visitor<num_type>
-    {
-        num_type operator()(nil & t) const;
-        num_type operator()(double & t) const;
-        num_type operator()(std::string & t) const;
-        num_type operator()(binary_operation & t) const;
-        num_type operator()(unary_operation & t) const;
-    };
+  class num_visitor : public boost::static_visitor<num_type>
+  {
+  public:
+    num_visitor();
+    num_visitor(std::unordered_map<std::string, double> *_map );
+    num_type operator()(nil & t) const;
+    num_type operator()(double & t) const;
+    num_type operator()(std::string & t) const;
+    num_type operator()(binary_operation & t) const;
+    num_type operator()(unary_operation & t) const;
 
-    struct collapsed_type {
-      collapsed_type()
-        : can_collapse(false)
-      {}
-      collapsed_type(double _value)
-        : value(_value), can_collapse(true)
-      {}
+  private:
+    std::unordered_map<std::string, double> *var_map = nullptr;
+  };
 
-      bool can_collapse = false;
-      double value = 0.0;
-    };
+  struct collapsed_type {
+    collapsed_type();
+    collapsed_type(double _value);
+    bool can_collapse = false;
+    double value = 0.0;
+  };
 
-    struct collapse_visitor : public boost::static_visitor<collapsed_type> {
-    public:
-      collapsed_type operator()(nil & t) const;
-      collapsed_type operator()(double & t) const;
-      collapsed_type operator()(std::string & t) const;
-      collapsed_type operator()(binary_operation & t) const;
-      collapsed_type operator()(unary_operation & t) const;
-    };
-
+  class collapse_visitor : public boost::static_visitor<collapsed_type> {
+  public:
+    collapse_visitor();
+    collapse_visitor(std::unordered_map<std::string, double> *_map);
+    collapsed_type operator()(nil & t) const;
+    collapsed_type operator()(double & t) const;
+    collapsed_type operator()(std::string & t) const;
+    collapsed_type operator()(binary_operation & t) const;
+    collapsed_type operator()(unary_operation & t) const;
+  private:
+    std::unique_ptr<num_visitor> num_visitor_m;
+  };
 }
 
 #endif

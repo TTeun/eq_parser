@@ -1,5 +1,6 @@
 #include "parser.h"
 #include "simplify.h"
+#include <tuple>
 
 namespace client
 {
@@ -70,7 +71,10 @@ namespace client
       std::cout << a << " ";
     std::cout << '\n';
 
-    collapsed_type c = boost::apply_visitor(collapse_visitor(), expr.syntax_tree.type);
+    std::unique_ptr<std::unordered_map<std::string, double>> var_map(new std::unordered_map<std::string, double>());
+    var_map->insert(make_pair(std::string("x"), 1.0));
+
+    collapsed_type c = boost::apply_visitor(collapse_visitor(var_map.get()), expr.syntax_tree.type);
     if (c.can_collapse)
       expr.syntax_tree.type = c.value;
 
