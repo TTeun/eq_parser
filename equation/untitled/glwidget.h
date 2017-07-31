@@ -1,25 +1,22 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
-#include <QGLWidget>
+#include <QOpenGLFunctions_4_1_Core>
+#include <QOpenGLWidget>
 #include <QString>
 #include <QDebug>
 #include "parser/parser.h"
 
-
-using boost::spirit::ascii::space;
-
-class GLWidget : public QGLWidget
+class GLWidget : public QOpenGLWidget, public QOpenGLFunctions_4_1_Core
 {
   Q_OBJECT
 public:
-  explicit GLWidget(QWidget *parent = 0);
-
+  GLWidget(QWidget *parent = 0);
+  ~GLWidget();
 
   void initializeGL();
   void paintGL();
   void resizeGL(int w, int h);
-
 
   void parse_equation(QString const &str);
 

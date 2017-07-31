@@ -45,14 +45,14 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         openGLWidget = new GLWidget(centralWidget);
         openGLWidget->setObjectName(QStringLiteral("openGLWidget"));
-        openGLWidget->setGeometry(QRect(205, 10, 751, 676));
+        openGLWidget->setGeometry(QRect(200, 20, 751, 676));
         equation = new QLineEdit(centralWidget);
         equation->setObjectName(QStringLiteral("equation"));
         equation->setGeometry(QRect(15, 75, 181, 25));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 962, 22));
+        menuBar->setGeometry(QRect(0, 0, 962, 25));
         menuHall = new QMenu(menuBar);
         menuHall->setObjectName(QStringLiteral("menuHall"));
         MainWindow->setMenuBar(menuBar);

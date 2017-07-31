@@ -32,5 +32,4 @@ namespace client {
     type = binary_operation(BIN_OP::POW, type, rhs);
     return *this;
   }
-
 }

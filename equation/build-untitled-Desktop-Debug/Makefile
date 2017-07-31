@@ -53,7 +53,8 @@ SOURCES       = ../untitled/main.cpp \
 		../untitled/glwidget.cpp \
 		parser/parser.cc \
 		parser/print.cc \
-		parser/simplify.cc moc_mainwindow.cpp \
+		parser/simplify.cc \
+		../untitled/renderable.cpp moc_mainwindow.cpp \
 		moc_glwidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
@@ -61,6 +62,7 @@ OBJECTS       = main.o \
 		parser.o \
 		print.o \
 		simplify.o \
+		renderable.o \
 		moc_mainwindow.o \
 		moc_glwidget.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -125,12 +127,14 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../untitled/glwidget.h \
 		parser/parser.h \
 		parser/print.h \
-		parser/simplify.h ../untitled/main.cpp \
+		parser/simplify.h \
+		../untitled/renderable.h ../untitled/main.cpp \
 		../untitled/mainwindow.cpp \
 		../untitled/glwidget.cpp \
 		parser/parser.cc \
 		parser/print.cc \
-		parser/simplify.cc
+		parser/simplify.cc \
+		../untitled/renderable.cpp
 QMAKE_TARGET  = untitled
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = untitled
@@ -302,8 +306,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../untitled/mainwindow.h ../untitled/glwidget.h parser/parser.h parser/print.h parser/simplify.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../untitled/main.cpp ../untitled/mainwindow.cpp ../untitled/glwidget.cpp parser/parser.cc parser/print.cc parser/simplify.cc $(DISTDIR)/
+	$(COPY_FILE) --parents ../untitled/mainwindow.h ../untitled/glwidget.h parser/parser.h parser/print.h parser/simplify.h ../untitled/renderable.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../untitled/main.cpp ../untitled/mainwindow.cpp ../untitled/glwidget.cpp parser/parser.cc parser/print.cc parser/simplify.cc ../untitled/renderable.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../untitled/mainwindow.ui $(DISTDIR)/
 
 
@@ -368,7 +372,8 @@ mainwindow.o: ../untitled/mainwindow.cpp ../untitled/mainwindow.h \
 
 glwidget.o: ../untitled/glwidget.cpp ../untitled/glwidget.h \
 		parser/parser.h \
-		parser/print.h
+		parser/print.h \
+		parser/simplify.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o glwidget.o ../untitled/glwidget.cpp
 
 parser.o: parser/parser.cc parser/parser.h \
@@ -382,6 +387,11 @@ print.o: parser/print.cc parser/print.h \
 simplify.o: parser/simplify.cc parser/simplify.h \
 		parser/parser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o simplify.o parser/simplify.cc
+
+renderable.o: ../untitled/renderable.cpp ../untitled/renderable.h \
+		../untitled/glwidget.h \
+		parser/parser.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o renderable.o ../untitled/renderable.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

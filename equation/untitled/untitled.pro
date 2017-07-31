@@ -11,22 +11,23 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = untitled
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         mainwindow.cpp \
-    glwidget.cpp \
-    parser/parser.cc \
-    parser/print.cc \
-    parser/simplify.cc
-
-
+        glwidget.cpp \
+        parser/parser.cc \
+        parser/print.cc \
+        parser/simplify.cc \
+        renderable.cpp
 
 HEADERS  += mainwindow.h \
-    glwidget.h \
-    parser/parser.h \
-    parser/print.h \
-    parser/simplify.h \
-
+         glwidget.h \
+         parser/parser.h \
+         parser/print.h \
+         parser/simplify.h \
+         renderable.h \
+         glwidget.h \
+         mainwindow.h \
+         renderable.h
 
 FORMS    += mainwindow.ui
 
