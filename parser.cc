@@ -22,6 +22,11 @@ namespace client
     return *this;
   }
 
+  ast& ast::operator^=(ast const& rhs){
+    type = binary_operation(BIN_OP::POW, type, rhs);
+    return *this;
+  }
+
 }
 
 namespace client
@@ -48,6 +53,7 @@ namespace client
                     t.tag == BIN_OP::SUB ? "-" :
                     t.tag == BIN_OP::MUL ? "*" :
                     t.tag == BIN_OP::DIV ? "/" :
+                    t.tag == BIN_OP::POW ? "^" :
                     "empty"
                    );
       boost::apply_visitor(*this, t.right.type);

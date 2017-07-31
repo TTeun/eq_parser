@@ -17,7 +17,7 @@ namespace ascii = boost::spirit::ascii;
 namespace phoenix = boost::phoenix;
 
 namespace client {
-  enum class BIN_OP { ADD, SUB, MUL, DIV };
+  enum class BIN_OP { ADD, SUB, MUL, DIV, POW };
   enum class UN_OP { MIN, SIN, COS, TAN, EXP };
 
   struct binary_operation;
@@ -33,6 +33,7 @@ namespace client {
     ast& operator-=(ast const& rhs);
     ast& operator*=(ast const& rhs);
     ast& operator/=(ast const& rhs);
+    ast& operator^=(ast const& rhs);
 
     ast()
       : type(nil()) {} // Error state
@@ -108,18 +109,23 @@ namespace client {
             );
 
       factor =
-          simple                 [_val = _1]
-          |   '(' >> expr        [_val = _1] >> ')'
-          |   ('-' >> factor     [_val = bind(make_unary, UN_OP::MIN, _1)])
-          |   ("sin" >> factor   [_val = bind(make_unary, UN_OP::SIN, _1)])
-          |   ("cos" >> factor   [_val = bind(make_unary, UN_OP::COS, _1)])
-          |   ("tan" >> factor   [_val = bind(make_unary, UN_OP::TAN, _1)])
-          |   ("exp" >> factor   [_val = bind(make_unary, UN_OP::EXP, _1)])
-          |   ('+' >> factor     [_val = _1]);
+            base                   [_val = _1]
+            >> *(  ('^' >> base    [_val ^= _1])
+          );
+
+      base =
+          simple               [_val = _1]
+          |   '(' >> expr      [_val = _1] >> ')'
+          |   ('-' >> base     [_val = bind(make_unary, UN_OP::MIN, _1)])
+          |   ("sin" >> base   [_val = bind(make_unary, UN_OP::SIN, _1)])
+          |   ("cos" >> base   [_val = bind(make_unary, UN_OP::COS, _1)])
+          |   ("tan" >> base   [_val = bind(make_unary, UN_OP::TAN, _1)])
+          |   ("exp" >> base   [_val = bind(make_unary, UN_OP::EXP, _1)])
+          |   ('+' >> base     [_val = _1]);
 
       // Prototyping of expression
       prtctd = lit("sin") | "cos" | "tan" | "exp";
-      var    = !prtctd >> *(ascii::lower | ascii::upper);
+      var    = !prtctd >> (ascii::lower | ascii::upper) >> *(ascii::lower | ascii::upper | ascii::digit);
       num    = double_;
       simple = _declared | num | '(' >> expr >> ')';
       name   = ascii::alpha >> *ascii::alnum;
@@ -129,7 +135,7 @@ namespace client {
   private:
     qi::symbols<char, std::string> _declared;
 
-    qi::rule<Iterator, ast(), ascii::space_type> expr, term, factor, simple;
+    qi::rule<Iterator, ast(), ascii::space_type> expr, term, base, factor, simple;
     qi::rule<Iterator, expression(), ascii::space_type> all;
     qi::rule<Iterator, std::vector<std::string>(), ascii::space_type> vars;
 
