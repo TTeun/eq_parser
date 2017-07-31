@@ -119,7 +119,7 @@ namespace client {
 
       // Prototyping of expression
       prtctd = lit("sin") | "cos" | "tan" | "exp";
-      var    = !prtctd >> *ascii::lower;
+      var    = !prtctd >> *(ascii::lower | ascii::upper);
       num    = double_;
       simple = _declared | num | '(' >> expr >> ')';
       name   = ascii::alpha >> *ascii::alnum;

@@ -87,7 +87,7 @@ namespace client
     std::cout << '\n';
 
     // boost::apply_visitor(simplify_visitor(), expr.syntax_tree.type);
-    // boost::apply_visitor(print_visitor(), expr.syntax_tree.type);
+    boost::apply_visitor(print_visitor(), expr.syntax_tree.type);
     std::cout << "\n";
   }
 }
