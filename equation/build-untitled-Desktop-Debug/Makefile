@@ -52,12 +52,14 @@ SOURCES       = ../untitled/main.cpp \
 		../untitled/mainwindow.cpp \
 		../untitled/glwidget.cpp \
 		parser/parser.cc \
+		parser/print.cc \
 		parser/simplify.cc moc_mainwindow.cpp \
 		moc_glwidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		glwidget.o \
 		parser.o \
+		print.o \
 		simplify.o \
 		moc_mainwindow.o \
 		moc_glwidget.o
@@ -122,10 +124,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../untitled/untitled.pro ../untitled/mainwindow.h \
 		../untitled/glwidget.h \
 		parser/parser.h \
+		parser/print.h \
 		parser/simplify.h ../untitled/main.cpp \
 		../untitled/mainwindow.cpp \
 		../untitled/glwidget.cpp \
 		parser/parser.cc \
+		parser/print.cc \
 		parser/simplify.cc
 QMAKE_TARGET  = untitled
 DESTDIR       = #avoid trailing-slash linebreak
@@ -298,8 +302,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../untitled/mainwindow.h ../untitled/glwidget.h parser/parser.h parser/simplify.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../untitled/main.cpp ../untitled/mainwindow.cpp ../untitled/glwidget.cpp parser/parser.cc parser/simplify.cc $(DISTDIR)/
+	$(COPY_FILE) --parents ../untitled/mainwindow.h ../untitled/glwidget.h parser/parser.h parser/print.h parser/simplify.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../untitled/main.cpp ../untitled/mainwindow.cpp ../untitled/glwidget.cpp parser/parser.cc parser/print.cc parser/simplify.cc $(DISTDIR)/
 	$(COPY_FILE) --parents ../untitled/mainwindow.ui $(DISTDIR)/
 
 
@@ -329,7 +333,8 @@ compiler_moc_header_clean:
 moc_mainwindow.cpp: ../untitled/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/teun/Documents/C++/boost/parser/equation/untitled -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../untitled/mainwindow.h -o moc_mainwindow.cpp
 
-moc_glwidget.cpp: ../untitled/glwidget.h
+moc_glwidget.cpp: parser/parser.h \
+		../untitled/glwidget.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/teun/Documents/C++/boost/parser/equation/untitled -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../untitled/glwidget.h -o moc_glwidget.cpp
 
 compiler_moc_source_make_all:
@@ -338,7 +343,8 @@ compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainwindow.h
 ui_mainwindow.h: ../untitled/mainwindow.ui \
-		../untitled/glwidget.h
+		../untitled/glwidget.h \
+		parser/parser.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../untitled/mainwindow.ui -o ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
@@ -356,15 +362,22 @@ main.o: ../untitled/main.cpp ../untitled/mainwindow.h
 
 mainwindow.o: ../untitled/mainwindow.cpp ../untitled/mainwindow.h \
 		ui_mainwindow.h \
-		../untitled/glwidget.h
+		../untitled/glwidget.h \
+		parser/parser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../untitled/mainwindow.cpp
 
-glwidget.o: ../untitled/glwidget.cpp ../untitled/glwidget.h
+glwidget.o: ../untitled/glwidget.cpp ../untitled/glwidget.h \
+		parser/parser.h \
+		parser/print.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o glwidget.o ../untitled/glwidget.cpp
 
 parser.o: parser/parser.cc parser/parser.h \
 		parser/simplify.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o parser.o parser/parser.cc
+
+print.o: parser/print.cc parser/print.h \
+		parser/parser.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o print.o parser/print.cc
 
 simplify.o: parser/simplify.cc parser/simplify.h \
 		parser/parser.h

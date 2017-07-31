@@ -16,6 +16,7 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     glwidget.cpp \
     parser/parser.cc \
+    parser/print.cc \
     parser/simplify.cc
 
 
@@ -23,6 +24,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     glwidget.h \
     parser/parser.h \
+    parser/print.h \
     parser/simplify.h \
 
 

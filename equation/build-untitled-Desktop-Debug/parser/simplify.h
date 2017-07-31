@@ -9,8 +9,8 @@ namespace client {
   struct num_type {
     num_type();
     num_type(double _value);
-    bool is_double = false;
     double value = 0.0;
+    bool is_double = false;
   };
 
   class num_visitor : public boost::static_visitor<num_type>
@@ -31,8 +31,8 @@ namespace client {
   struct collapsed_type {
     collapsed_type();
     collapsed_type(double _value);
-    bool can_collapse = false;
     double value = 0.0;
+    bool can_collapse = false;
   };
 
   class collapse_visitor : public boost::static_visitor<collapsed_type> {

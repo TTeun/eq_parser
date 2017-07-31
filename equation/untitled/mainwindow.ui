@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>851</width>
-    <height>451</height>
+    <width>962</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,18 +17,18 @@
    <widget class="GLWidget" name="openGLWidget">
     <property name="geometry">
      <rect>
-      <x>315</x>
-      <y>60</y>
-      <width>306</width>
-      <height>216</height>
+      <x>205</x>
+      <y>10</y>
+      <width>751</width>
+      <height>676</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="equation">
     <property name="geometry">
      <rect>
-      <x>45</x>
-      <y>185</y>
+      <x>15</x>
+      <y>75</y>
       <width>181</width>
       <height>25</height>
      </rect>
@@ -40,7 +40,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>851</width>
+     <width>962</width>
      <height>22</height>
     </rect>
    </property>

@@ -16,7 +16,7 @@ public:
   ~MainWindow();
 
 private slots:
-  void on_lineEdit_textChanged(const QString &arg1);
+  void on_equation_editingFinished();
 
 private:
   Ui::MainWindow *ui;

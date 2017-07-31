@@ -13,7 +13,8 @@ MainWindow::~MainWindow()
   delete ui;
 }
 
-void MainWindow::on_lineEdit_textChanged(const QString &arg1)
+void MainWindow::on_equation_editingFinished()
 {
-  ui->openGLWidget->ins = 3;
+  ui->openGLWidget->parse_equation(ui->equation->text());
+  ui->openGLWidget->paintGL();
 }

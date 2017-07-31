@@ -1,30 +1,49 @@
 #include "simplify.h"
 #include <cmath>
+#include <qglobal.h>
 
 namespace client {
-  num_type::num_type(){}
+  num_type::num_type() {}
   num_type::num_type(double _value)
     : value(_value), is_double(true)
   {}
 
 
-  collapsed_type::collapsed_type(){};
+  collapsed_type::collapsed_type() {}
   collapsed_type::collapsed_type(double _value)
     : value(_value), can_collapse(true)
   {}
 
-  num_type num_visitor::operator()(nil & t) const { return num_type(); }
-  num_type num_visitor::operator()(double & t) const { return num_type(t); }
-  num_type num_visitor::operator()(std::string & t) const {
+  num_type num_visitor::operator()(nil & t) const
+  {
+    Q_UNUSED(t);
+    return num_type();
+  }
+  num_type num_visitor::operator()(double & t) const
+  {
+    return num_type(t);
+  }
+  num_type num_visitor::operator()(std::string & t) const
+  {
     if (not var_map)
       return num_type();
-    else
-      return num_type( (*var_map)[t] );
+    if (var_map->find(t) == var_map->end())
+      return num_type();
+    return num_type( (*var_map)[t] );
   }
-  num_type num_visitor::operator()(binary_operation & t) const { return num_type(); }
-  num_type num_visitor::operator()(unary_operation & t) const { return num_type(); }
+  num_type num_visitor::operator()(binary_operation & t) const
+  {
+    Q_UNUSED(t);
+    return num_type();
+  }
+  num_type num_visitor::operator()(unary_operation & t) const
+  {
+    Q_UNUSED(t);
+    return num_type();
+  }
 
-  double get_val(double l, double r, BIN_OP t){
+  double get_val(double l, double r, BIN_OP t)
+  {
     switch (t) {
       case BIN_OP::ADD:
         return l + r;
@@ -38,10 +57,15 @@ namespace client {
       case BIN_OP::DIV:
         return l / r;
         break;
+      case BIN_OP::POW:
+        return pow(l, r);
+        break;
     }
+    return 0;
   }
 
-  double get_val(double val, UN_OP t){
+  double get_val(double val, UN_OP t)
+  {
     switch (t) {
       case UN_OP::SIN:
         return sin(val);
@@ -59,9 +83,10 @@ namespace client {
         return -val;
         break;
     }
+    return 0;
   }
 
-  num_visitor::num_visitor(){}
+  num_visitor::num_visitor() {}
   num_visitor::num_visitor(std::unordered_map<std::string, double> *_map )
     : var_map(_map)
   {}
@@ -75,19 +100,26 @@ namespace client {
   {}
 
 
-  collapsed_type collapse_visitor::operator()(nil & t) const {
+  collapsed_type collapse_visitor::operator()(nil & t) const
+  {
+    Q_UNUSED(t);
     return collapsed_type();
-   }
+  }
 
-  collapsed_type collapse_visitor::operator()(double & t) const {
+  collapsed_type collapse_visitor::operator()(double & t) const
+  {
+    Q_UNUSED(t);
     return collapsed_type();
-   }
+  }
 
-  collapsed_type collapse_visitor::operator()(std::string & t) const {
+  collapsed_type collapse_visitor::operator()(std::string & t) const
+  {
+    Q_UNUSED(t);
     return collapsed_type();
-   }
+  }
 
-  collapsed_type collapse_visitor::operator()(binary_operation & t) const {
+  collapsed_type collapse_visitor::operator()(binary_operation & t) const
+  {
     collapsed_type c = boost::apply_visitor(*this, t.left.type);
     if (c.can_collapse)
       t.left.type = c.value;
@@ -104,7 +136,8 @@ namespace client {
     return collapsed_type();
   }
 
-  collapsed_type collapse_visitor::operator()(unary_operation & t) const {
+  collapsed_type collapse_visitor::operator()(unary_operation & t) const
+  {
     collapsed_type c = boost::apply_visitor(*this, t.tree.type);
     if (c.can_collapse)
       t.tree.type = c.value;

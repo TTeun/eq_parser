@@ -30,7 +30,7 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     GLWidget *openGLWidget;
-    QLineEdit *lineEdit;
+    QLineEdit *equation;
     QMenuBar *menuBar;
     QMenu *menuHall;
     QToolBar *mainToolBar;
@@ -40,19 +40,19 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(851, 451);
+        MainWindow->resize(962, 753);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         openGLWidget = new GLWidget(centralWidget);
         openGLWidget->setObjectName(QStringLiteral("openGLWidget"));
-        openGLWidget->setGeometry(QRect(315, 60, 306, 216));
-        lineEdit = new QLineEdit(centralWidget);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(45, 185, 181, 25));
+        openGLWidget->setGeometry(QRect(205, 10, 751, 676));
+        equation = new QLineEdit(centralWidget);
+        equation->setObjectName(QStringLiteral("equation"));
+        equation->setGeometry(QRect(15, 75, 181, 25));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 851, 22));
+        menuBar->setGeometry(QRect(0, 0, 962, 22));
         menuHall = new QMenu(menuBar);
         menuHall->setObjectName(QStringLiteral("menuHall"));
         MainWindow->setMenuBar(menuBar);
