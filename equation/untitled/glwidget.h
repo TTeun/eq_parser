@@ -25,8 +25,10 @@ class GLWidget : public QOpenGLWidget, public QOpenGLFunctions_4_1_Core {
 
     Expression expression;
 
-  private:
     unique_ptr<Renderable> renderer;
+  private:
+    GLuint uniform_a;
+    GLuint uniform_b;
 
     QOpenGLShaderProgram* mainShaderProg,* blackShaderProg,* whiteShaderProg,* greyShaderProg;
     void createShaderPrograms();

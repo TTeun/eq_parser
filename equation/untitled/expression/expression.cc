@@ -2,8 +2,10 @@
 #include "../parser/print.h"
 #include "../parser/simplify.h"
 
+#include <cassert>
+#include <QDebug>
 
-#include "QDebug"
+LinearSpan Expression::span{-1, 1, 100};
 
 Expression::Expression()
   :
@@ -35,7 +37,7 @@ void Expression::parse_equation(QString const &str)
 
     state = EXPR_STATE::OK;
 
-    client::print_tree(expr);
+//    client::print_tree(expr);
   } else {
     state = EXPR_STATE::ERROR;
   }
@@ -44,15 +46,15 @@ void Expression::parse_equation(QString const &str)
 
 double Expression::eval_at(string &var, double _x)
 {
-  if (state == EXPR_STATE::ERROR)
-    return -100.0;
+  assert(state == EXPR_STATE::OK);
 
   if (var_map->find(var) != var_map->end())
     (*var_map)[var] = _x;
   else
     var_map->insert(make_pair(var, _x));
 
-  client::collapsed_type c = boost::apply_visitor(client::collapse_visitor(var_map.get()), expr.syntax_tree.type);
+  client::expression e = expr;
+  client::collapsed_type c = boost::apply_visitor(client::collapse_visitor(var_map.get()), e.syntax_tree.type);
   if (c.can_collapse)
     return c.value;
   else
@@ -62,4 +64,9 @@ double Expression::eval_at(string &var, double _x)
 size_t Expression::dimension()
 {
   return expr.arguments.size();
+}
+
+bool Expression::is_ok()
+{
+  return state == EXPR_STATE::OK;
 }

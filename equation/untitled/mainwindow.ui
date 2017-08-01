@@ -24,15 +24,104 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="equation">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>15</x>
-      <y>75</y>
-      <width>181</width>
-      <height>25</height>
+      <x>5</x>
+      <y>20</y>
+      <width>186</width>
+      <height>76</height>
      </rect>
     </property>
+    <property name="title">
+     <string>Function</string>
+    </property>
+    <widget class="QLineEdit" name="equation">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>35</y>
+       <width>181</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>105</y>
+      <width>186</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <widget class="QDoubleSpinBox" name="a_spinbox">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>30</y>
+       <width>56</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-1000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.100000000000000</double>
+     </property>
+     <property name="value">
+      <double>-1.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="b_spinbox">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>30</y>
+       <width>69</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-1000.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>1000.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.100000000000000</double>
+     </property>
+     <property name="value">
+      <double>1.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="n_spinbox">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>65</y>
+       <width>48</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>10</number>
+     </property>
+     <property name="maximum">
+      <number>10000</number>
+     </property>
+     <property name="value">
+      <number>100</number>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

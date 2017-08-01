@@ -26,7 +26,7 @@ class Renderable {
 
     void registerRenderable(); // Register the VAO etc.
     void updateRenderable();   // Send data to GPU
-
+    void clear();
   private:
     GLWidget *ui;
 };

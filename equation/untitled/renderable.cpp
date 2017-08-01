@@ -8,17 +8,6 @@ Renderable::Renderable(GLWidget *_ui)
   ui(_ui)
 {
   qDebug() << "Renderable constructor";
-  coords->append(QVector2D(0.0, 0.0));
-  coords->append(QVector2D(0.5, 0.0));
-  coords->append(QVector2D(0.5, 0.3));
-  coords->append(QVector2D(0.9, 0.3));
-  coords->append(QVector2D(0.5, 0.1));
-
-  colours->append(QVector3D(0.5, 0.5, 0.5));
-  colours->append(QVector3D(0.1, 0.6, 0.5));
-  colours->append(QVector3D(0.1, 0.6, 0.5));
-  colours->append(QVector3D(0.1, 0.6, 0.5));
-  colours->append(QVector3D(0.5, 0.1, 0.9));
 }
 
 void Renderable::registerRenderable()
@@ -41,11 +30,19 @@ void Renderable::registerRenderable()
 
 void Renderable::updateRenderable()
 {
+  assert(coords->size() > 0);
+
   ui->glBindBuffer(GL_ARRAY_BUFFER, coordsBO);
-  ui->glBufferData(GL_ARRAY_BUFFER, sizeof(QVector2D) * coords->size(), coords->data(), GL_DYNAMIC_DRAW);
+  ui->glBufferData(GL_ARRAY_BUFFER, sizeof(QVector2D) * coords->size(), coords->data(), GL_STATIC_DRAW);
 
   ui->glBindBuffer(GL_ARRAY_BUFFER, colourBO);
   ui->glBufferData(GL_ARRAY_BUFFER, sizeof(QVector3D) * colours->size(), colours->data(), GL_DYNAMIC_DRAW);
+}
+
+void Renderable::clear()
+{
+  coords->resize(0);
+  colours->resize(0);
 }
 
 Renderable::~Renderable()

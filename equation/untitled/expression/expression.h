@@ -6,6 +6,7 @@
 #include <string>
 #include <memory>
 
+#include "linearspan.h"
 #include "../parser/parser.h"
 
 using namespace std;
@@ -15,7 +16,6 @@ class Expression {
     Expression();
     Expression(QString &str);
     ~Expression();
-
 
     enum class EXPR_STATE {
       EMPTY,
@@ -33,6 +33,9 @@ class Expression {
 
     double eval_at(string &var, double _x);
     size_t dimension();
+    bool is_ok();
+
+    static LinearSpan span;
 
   private:
     EXPR_STATE state = EXPR_STATE::EMPTY;
