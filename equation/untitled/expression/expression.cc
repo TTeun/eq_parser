@@ -2,11 +2,17 @@
 #include "../parser/print.h"
 #include "../parser/simplify.h"
 
+
 #include "QDebug"
 
-Expression::Expression() {}
+Expression::Expression()
+  :
+  var_map(make_unique<std::unordered_map<std::string, double>>())
+{}
 
 Expression::Expression(QString &str)
+  :
+  var_map(make_unique<std::unordered_map<std::string, double>>())
 {
   parse_equation(str);
 }
@@ -34,4 +40,23 @@ void Expression::parse_equation(QString const &str)
     state = EXPR_STATE::ERROR;
   }
 
+}
+
+double Expression::eval_at(string &var, double _x)
+{
+  if (state == EXPR_STATE::ERROR)
+    return -100.0;
+
+  if (var_map->find(var) != var_map->end())
+    (*var_map)[var] = _x;
+  else
+    var_map->insert(make_pair(var, _x));
+
+  client::collapsed_type c = boost::apply_visitor(client::collapse_visitor(var_map.get()), expr.syntax_tree.type);
+  client::print_tree(expr);
+
+  if (c.can_collapse)
+    return c.value;
+  else
+    return -100.0;
 }

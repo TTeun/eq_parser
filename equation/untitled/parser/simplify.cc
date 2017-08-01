@@ -148,7 +148,4 @@ namespace client {
 
     return collapsed_type();
   }
-
-
-
 }

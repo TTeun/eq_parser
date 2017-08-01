@@ -3,6 +3,7 @@
 
 #include <QOpenGLFunctions_4_1_Core>
 #include <QOpenGLWidget>
+#include <QOpenGLShaderProgram>
 #include <QString>
 #include <QDebug>
 #include <memory>
@@ -22,8 +23,17 @@ class GLWidget : public QOpenGLWidget, public QOpenGLFunctions_4_1_Core {
     void paintGL();
     void resizeGL(int w, int h);
 
-    Expression expr;
+    Expression expression;
+
+  private:
     unique_ptr<Renderable> renderer;
+
+    QOpenGLShaderProgram* mainShaderProg,* blackShaderProg,* whiteShaderProg,* greyShaderProg;
+    void createShaderPrograms();
+    void bindShader(QOpenGLShaderProgram *program);
+
+    void renderRenderable(Renderable *obj, QOpenGLShaderProgram*shaderProg, GLenum mode); // Render a renderable objects
+
 };
 
 #endif // GLWIDGET_H

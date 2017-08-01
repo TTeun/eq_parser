@@ -7,6 +7,11 @@
 namespace client {
   class print_visitor {
     public:
+      ~print_visitor()
+      {
+        delete str;
+      }
+
       void operator()(nil & t) const
       {
         Q_UNUSED(t);
@@ -61,10 +66,6 @@ namespace client {
       str.append(" ");
     }
     qDebug() << str;
-
-//    std::unique_ptr<std::unordered_map<std::string, double>> var_map(new std::unordered_map<std::string, double>());
-//    var_map->insert(make_pair(std::string("x"), 1.0));
-
     print_visitor p;
     boost::apply_visitor(p, expr.syntax_tree.type);
     qDebug() << *(p.str);

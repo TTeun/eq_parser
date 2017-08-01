@@ -21,11 +21,8 @@ class Renderable {
 
     unique_ptr<QVector <QVector2D>> coords;
     unique_ptr<QVector <QVector3D>> colours;
-    unique_ptr<QVector<size_t>> indices;
 
-    GLuint vao, coordsBO, colourBO, indicesBO;
-
-    unsigned int maxInt = ((unsigned int) -1);
+    GLuint vao, coordsBO, colourBO;
 
     void registerRenderable(); // Register the VAO etc.
     void updateRenderable();   // Send data to GPU
