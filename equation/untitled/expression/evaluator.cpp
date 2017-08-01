@@ -13,7 +13,12 @@ namespace evaluator {
 
     renderer->clear();
     qDebug() << "Filling renderable with expression";
-    std::string var = expression->expr.arguments[0];
+    std::string var ;
+
+    if (expression->dimension() != 0)
+      var = expression->expr.arguments[0];
+    else
+      var = "d"; // dummy variable for constant function
 
     for (size_t i = 0; i < Expression::span.size(); ++i) {
       double x = Expression::span.value_at_pos(i);
