@@ -1,4 +1,5 @@
 #include "print.h"
+#include "parser.h"
 #include <qglobal.h>
 #include <qdebug.h>
 #include <QString>

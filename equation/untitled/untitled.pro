@@ -17,6 +17,7 @@ SOURCES += main.cpp\
         parser/parser.cc \
         parser/print.cc \
         parser/simplify.cc \
+        expression/expression.cc \
         renderable.cpp
 
 HEADERS  += mainwindow.h \
@@ -25,8 +26,7 @@ HEADERS  += mainwindow.h \
          parser/print.h \
          parser/simplify.h \
          renderable.h \
-         glwidget.h \
-         mainwindow.h \
+         expression/expression.h \
          renderable.h
 
 FORMS    += mainwindow.ui

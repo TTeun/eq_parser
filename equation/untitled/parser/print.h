@@ -1,7 +1,7 @@
 #ifndef PRINT_H
 #define PRINT_H
 
-#include "parser.h"
+struct expression;
 
 namespace client {
   void print_tree(expression &expr);

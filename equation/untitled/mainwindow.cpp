@@ -15,6 +15,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_equation_editingFinished()
 {
-  ui->openGLWidget->parse_equation(ui->equation->text());
+  ui->openGLWidget->expr.parse_equation(ui->equation->text());
   ui->openGLWidget->paintGL();
 }

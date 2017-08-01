@@ -6,7 +6,6 @@
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/variant/variant.hpp>
 
-#include <iostream>
 #include <vector>
 #include <string>
 
@@ -91,7 +90,7 @@ namespace client {
     using phoenix::push_back;
     using phoenix::bind;
 
-    all = name >> '(' >> vars >> ')' >> '=' >> expr;
+    all = name >> '(' >> -vars >> ')' >> '=' >> expr;
 
     // Parsing of actual expression
     expr =
