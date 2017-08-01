@@ -121,7 +121,6 @@ namespace client {
       |   ("exp" >> base   [_val = bind(make_unary, UN_OP::EXP, _1)])
       |   ('+' >> base     [_val = _1]);
 
-    // Prototyping of expression
     prtctd = lit("sin") | "cos" | "tan" | "exp";
     var    = !prtctd >> (ascii::lower | ascii::upper) >> *(ascii::lower | ascii::upper | ascii::digit);
     num    = double_;
