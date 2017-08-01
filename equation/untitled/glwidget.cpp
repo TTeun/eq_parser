@@ -1,18 +1,25 @@
 #include "glwidget.h"
 
-GLWidget::GLWidget(QWidget *parent) : QOpenGLWidget(parent)
+GLWidget::GLWidget(QWidget *parent)
+  :
+  QOpenGLWidget(parent),
+  renderer(make_unique<Renderable>(this))
 {
   qDebug() << "GLWidget constructor";
 }
 
-GLWidget::~GLWidget(){
-  qDebug() << "GLWidget destructor!";
+GLWidget::~GLWidget()
+{
+  qDebug() << "GLWidget destructor";
 }
 
 void GLWidget::initializeGL()
 {
   qDebug() << "GLWidget init";
   initializeOpenGLFunctions();
+
+  renderer->registerRenderable();
+
   glClearColor(0.0, 0.0, 0.0, 1.0);
   glEnable(GL_DEPTH_TEST);
 }

@@ -4,13 +4,14 @@
 
 #include "QDebug"
 
-Expression::Expression(){}
+Expression::Expression() {}
 
-Expression::Expression(QString &str){
+Expression::Expression(QString &str)
+{
   parse_equation(str);
 }
 
-Expression::~Expression(){}
+Expression::~Expression() {}
 
 void Expression::parse_equation(QString const &str)
 {
@@ -26,8 +27,11 @@ void Expression::parse_equation(QString const &str)
     if (c.can_collapse)
       expr.syntax_tree.type = c.value;
 
+    state = EXPR_STATE::OK;
+
     client::print_tree(expr);
-  } else
-    qDebug() << "Error in parse";
+  } else {
+    state = EXPR_STATE::ERROR;
+  }
 
 }
