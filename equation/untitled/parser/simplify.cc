@@ -109,12 +109,15 @@ namespace client {
   collapsed_type collapse_visitor::operator()(double & t) const
   {
     Q_UNUSED(t);
-    return collapsed_type();
+    return collapsed_type(t);
   }
 
   collapsed_type collapse_visitor::operator()(std::string & t) const
   {
-    Q_UNUSED(t);
+    num_type n_type = num_visitor_m->operator()(t);
+    if (n_type.is_double)
+      return collapsed_type(n_type.value);
+
     return collapsed_type();
   }
 

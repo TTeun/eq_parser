@@ -53,10 +53,13 @@ double Expression::eval_at(string &var, double _x)
     var_map->insert(make_pair(var, _x));
 
   client::collapsed_type c = boost::apply_visitor(client::collapse_visitor(var_map.get()), expr.syntax_tree.type);
-  client::print_tree(expr);
-
   if (c.can_collapse)
     return c.value;
   else
     return -100.0;
+}
+
+size_t Expression::dimension()
+{
+  return expr.arguments.size();
 }

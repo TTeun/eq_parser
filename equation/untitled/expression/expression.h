@@ -32,6 +32,7 @@ class Expression {
     client::expression expr;
 
     double eval_at(string &var, double _x);
+    size_t dimension();
 
   private:
     EXPR_STATE state = EXPR_STATE::EMPTY;
