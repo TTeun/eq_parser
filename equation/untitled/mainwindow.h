@@ -16,15 +16,14 @@ class MainWindow : public QMainWindow {
 
   private slots:
     void on_equation_editingFinished();
-
     void on_a_spinbox_valueChanged(double arg1);
-
     void on_b_spinbox_valueChanged(double arg1);
-
     void on_n_spinbox_valueChanged(int arg1);
 
   private:
     Ui::MainWindow *ui;
+
+    void fill_and_update();
 };
 
 #endif // MAINWINDOW_H

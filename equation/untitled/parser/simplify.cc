@@ -1,5 +1,6 @@
 #include "simplify.h"
 #include <cmath>
+#include <limits>
 #include <qglobal.h>
 
 namespace client {
@@ -55,6 +56,8 @@ namespace client {
         return l * r;
         break;
       case BIN_OP::DIV:
+        if (r == 0.0)
+          return l >= 0 ? std::numeric_limits<double>::max() : std::numeric_limits<double>::min();
         return l / r;
         break;
       case BIN_OP::POW:

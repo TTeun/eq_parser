@@ -18,9 +18,10 @@ SOURCES += main.cpp\
         parser/print.cc \
         parser/simplify.cc \
         expression/expression.cc \
-        renderable.cpp \
+        renderables/renderable.cpp \
     expression/linearspan.cpp \
-    expression/evaluator.cpp
+    expression/evaluator.cpp \
+    renderables/axes.cpp
 
 HEADERS  += mainwindow.h \
          glwidget.h \
@@ -29,9 +30,10 @@ HEADERS  += mainwindow.h \
          parser/simplify.h \
          renderable.h \
          expression/expression.h \
-         renderable.h \
+         renderables/renderable.h \
     expression/linearspan.h \
-    expression/evaluator.h
+    expression/evaluator.h \
+    renderables/axes.h
 
 FORMS    += mainwindow.ui
 

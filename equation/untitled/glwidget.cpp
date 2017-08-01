@@ -3,7 +3,9 @@
 GLWidget::GLWidget(QWidget *parent)
   :
   QOpenGLWidget(parent),
-  renderer(make_unique<Renderable>(this))
+  renderer(make_unique<Renderable>(this)),
+  expression(make_unique<Expression>()),
+  mainShaderProg(make_unique<QOpenGLShaderProgram>())
 {
   qDebug() << "GLWidget constructor";
 }
@@ -26,7 +28,6 @@ void GLWidget::initializeGL()
 
 void GLWidget::createShaderPrograms()
 {
-  mainShaderProg = new QOpenGLShaderProgram();
   mainShaderProg->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/vertshader.glsl");
   mainShaderProg->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/fragshader.glsl");
   mainShaderProg->link();
@@ -52,7 +53,7 @@ void GLWidget::paintGL()
   glUniform1f(uniform_b, static_cast<float>(Expression::span.get_b()));
   mainShaderProg->release();
 
-  renderRenderable(renderer.get(), mainShaderProg, GL_LINE_STRIP);
+  renderRenderable(renderer.get(), mainShaderProg.get(), GL_LINE_STRIP);
 }
 
 void GLWidget::resizeGL(int w, int h)

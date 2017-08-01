@@ -16,34 +16,33 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_equation_editingFinished()
 {
-  ui->openGLWidget->expression.parse_equation(ui->equation->text());
-  evaluator::fill_expr_1D(ui->openGLWidget->expression, ui->openGLWidget->renderer.get());
-
-  ui->openGLWidget->update();
+  ui->openGLWidget->expression->parse_equation(ui->equation->text());
+  fill_and_update();
 }
+
+
 
 void MainWindow::on_a_spinbox_valueChanged(double arg1)
 {
   Expression::span.set_a(arg1);
-  evaluator::fill_expr_1D(ui->openGLWidget->expression, ui->openGLWidget->renderer.get());
-
-  ui->openGLWidget->update();
-
+  fill_and_update();
 }
 
 void MainWindow::on_b_spinbox_valueChanged(double arg1)
 {
   Expression::span.set_b(arg1);
-  evaluator::fill_expr_1D(ui->openGLWidget->expression, ui->openGLWidget->renderer.get());
-
-  ui->openGLWidget->update();
+  fill_and_update();
 }
 
 void MainWindow::on_n_spinbox_valueChanged(int arg1)
 {
   Expression::span.set_n(arg1);
-  evaluator::fill_expr_1D(ui->openGLWidget->expression, ui->openGLWidget->renderer.get());
+  fill_and_update();
+}
+
+void MainWindow::fill_and_update()
+{
+  evaluator::fill_expr_1D(ui->openGLWidget->expression.get(), ui->openGLWidget->renderer.get());
 
   ui->openGLWidget->update();
-
 }

@@ -8,7 +8,7 @@
 #include <QDebug>
 #include <memory>
 
-#include "renderable.h"
+#include "renderables/renderable.h"
 #include "expression/expression.h"
 
 using namespace std;
@@ -23,14 +23,13 @@ class GLWidget : public QOpenGLWidget, public QOpenGLFunctions_4_1_Core {
     void paintGL();
     void resizeGL(int w, int h);
 
-    Expression expression;
-
     unique_ptr<Renderable> renderer;
+    unique_ptr<Expression> expression;
   private:
     GLuint uniform_a;
     GLuint uniform_b;
 
-    QOpenGLShaderProgram* mainShaderProg,* blackShaderProg,* whiteShaderProg,* greyShaderProg;
+    unique_ptr<QOpenGLShaderProgram> mainShaderProg;
     void createShaderPrograms();
     void bindShader(QOpenGLShaderProgram *program);
 
