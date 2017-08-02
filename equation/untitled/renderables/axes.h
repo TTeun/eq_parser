@@ -13,6 +13,7 @@ class Axes {
     Axes(GLWidget *ui);
 
     void registerAxes();
+    void set_ab(double a, double b);
 
     Renderable *x_axis();
     Renderable *y_axis();

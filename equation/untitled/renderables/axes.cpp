@@ -26,6 +26,12 @@ void Axes::registerAxes()
   y_axis_m->registerRenderable();
 }
 
+void Axes::set_ab(double a, double b)
+{
+  (*x_axis()->coords)[0] = QVector2D(a, 0.0);
+  (*x_axis()->coords)[1] = QVector2D(b, 0.0);
+}
+
 Renderable *Axes::x_axis()
 {
   return x_axis_m.get();

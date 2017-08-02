@@ -92,13 +92,10 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
 void GLWidget::update_linear_span(double dx, double dy)
 {
+  Q_UNUSED(dy);
   Expression::span.incr_x(-dx);
 
   emit linear_span_changed(Expression::span.get_a(), Expression::span.get_b());
-
-  auto& x_axis_coords = *(axes->x_axis()->coords.get());
-  x_axis_coords[0] = QVector2D(Expression::span.get_a(), 0.0);
-  x_axis_coords[1] = QVector2D(Expression::span.get_b(), 0.0);
 
   mainShaderProg->bind();
   glUniform1f(uniform_a, static_cast<float>(Expression::span.get_a()));

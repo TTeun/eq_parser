@@ -37,7 +37,6 @@ class GLWidget : public QOpenGLWidget, public QOpenGLFunctions_4_1_Core {
     void mousePressEvent(QMouseEvent *event);
     double x_click, y_click;
 
-
   signals:
     void linear_span_changed(double a, double b);
 

@@ -40,8 +40,6 @@ class Expression {
   private:
     EXPR_STATE state = EXPR_STATE::EMPTY;
     std::unique_ptr<std::unordered_map<std::string, double>> var_map;
-    //    var_map->insert(make_pair(std::string("x"), 1.0));
-
 };
 
 

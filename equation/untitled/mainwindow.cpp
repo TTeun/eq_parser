@@ -9,11 +9,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
   connect(ui->openGLWidget, SIGNAL( linear_span_changed(double, double) ), this, SLOT(linear_span_changed(double, double)));
-
-//  connect(ui->a_spinbox, SIGNAL(valueChanged(double)), SLOT(linear_span_changed()));
-//  connect(ui->b_spinbox, SIGNAL(valueChanged(double)), SLOT(linear_span_changed()));
-//  connect(ui->n_spinbox, SIGNAL(valueChanged(int)), SLOT(linear_span_changed()));
-
 }
 
 MainWindow::~MainWindow()
@@ -31,6 +26,7 @@ void MainWindow::linear_span_changed(double a, double b)
 {
   ui->a_spinbox->setValue(a);
   ui->b_spinbox->setValue(b);
+  ui->openGLWidget->axes->set_ab(a, b);
 
   fill_and_update();
 }
