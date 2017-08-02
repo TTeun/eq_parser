@@ -35,6 +35,12 @@ void LinearSpan::set_n(size_t _n)
   n = _n;
 }
 
+void LinearSpan::incr_x(double dx)
+{
+  a += dx;
+  b += dx;
+}
+
 double LinearSpan::get_a()
 {
   return a;

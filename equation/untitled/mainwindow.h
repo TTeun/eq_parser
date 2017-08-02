@@ -14,11 +14,14 @@ class MainWindow : public QMainWindow {
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+  public slots:
+    void linear_span_changed(double a, double b);
+
   private slots:
     void on_equation_editingFinished();
-    void on_a_spinbox_valueChanged(double arg1);
-    void on_b_spinbox_valueChanged(double arg1);
-    void on_n_spinbox_valueChanged(int arg1);
+
+  protected:
+    void mouseMoveEvent(QMouseEvent *event);
 
   private:
     Ui::MainWindow *ui;

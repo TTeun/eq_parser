@@ -15,6 +15,8 @@ class LinearSpan {
     void set_b(double _b);
     void set_n(size_t n);
 
+    void incr_x(double dx);
+
     double get_a();
     double get_b();
   private:

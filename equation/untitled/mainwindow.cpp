@@ -1,12 +1,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "expression/evaluator.h"
+#include <QMouseEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
+  connect(ui->openGLWidget, SIGNAL( linear_span_changed(double, double) ), this, SLOT(linear_span_changed(double, double)));
+
+//  connect(ui->a_spinbox, SIGNAL(valueChanged(double)), SLOT(linear_span_changed()));
+//  connect(ui->b_spinbox, SIGNAL(valueChanged(double)), SLOT(linear_span_changed()));
+//  connect(ui->n_spinbox, SIGNAL(valueChanged(int)), SLOT(linear_span_changed()));
+
 }
 
 MainWindow::~MainWindow()
@@ -20,23 +27,11 @@ void MainWindow::on_equation_editingFinished()
   fill_and_update();
 }
 
-
-
-void MainWindow::on_a_spinbox_valueChanged(double arg1)
+void MainWindow::linear_span_changed(double a, double b)
 {
-  Expression::span.set_a(arg1);
-  fill_and_update();
-}
+  ui->a_spinbox->setValue(a);
+  ui->b_spinbox->setValue(b);
 
-void MainWindow::on_b_spinbox_valueChanged(double arg1)
-{
-  Expression::span.set_b(arg1);
-  fill_and_update();
-}
-
-void MainWindow::on_n_spinbox_valueChanged(int arg1)
-{
-  Expression::span.set_n(arg1);
   fill_and_update();
 }
 
@@ -45,4 +40,10 @@ void MainWindow::fill_and_update()
   evaluator::fill_expr_1D(ui->openGLWidget->expression.get(), ui->openGLWidget->renderer.get());
 
   ui->openGLWidget->update();
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent* event)
+{
+  qDebug() << QString::number(event->pos().x());
+  qDebug() << QString::number(event->pos().y());
 }
