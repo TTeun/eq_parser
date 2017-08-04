@@ -1,8 +1,8 @@
 #ifndef EVALUATOR_H
 #define EVALUATOR_H
 
-#include "linearspan.h"
 #include "expression.h"
+#include "../renderables/axes.h"
 #include "../renderables/renderable.h"
 
 namespace evaluator {

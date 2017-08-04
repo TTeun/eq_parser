@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVector>
+#include "exprwidget.h"
 
 namespace Ui {
   class MainWindow;
@@ -15,18 +17,17 @@ class MainWindow : public QMainWindow {
     ~MainWindow();
 
   public slots:
-    void linear_span_changed(double a, double b);
+    void axes_changed(double x_min, double x_max, double y_min, double y_max);
+    void add_expr_widget();
 
   private slots:
     void on_equation_editingFinished();
-
-  protected:
-    void mouseMoveEvent(QMouseEvent *event);
+    void on_pushButton_clicked();
 
   private:
-    Ui::MainWindow *ui;
-
     void fill_and_update();
+    size_t expr_widget_count = 1;
+    Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H

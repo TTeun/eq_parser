@@ -38,11 +38,13 @@ class GLWidget : public QOpenGLWidget, public QOpenGLFunctions_4_1_Core {
     double x_click, y_click;
 
   signals:
-    void linear_span_changed(double a, double b);
+    void linear_span_changed(double a, double b, double y_min, double y_max);
 
   private:
-    GLuint uniform_a;
-    GLuint uniform_b;
+    GLuint uniform_x_min;
+    GLuint uniform_x_max;
+    GLuint uniform_y_min;
+    GLuint uniform_y_max;
 
     unique_ptr<QOpenGLShaderProgram> mainShaderProg;
     void createShaderPrograms();

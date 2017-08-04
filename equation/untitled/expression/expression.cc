@@ -5,8 +5,6 @@
 #include <cassert>
 #include <QDebug>
 
-LinearSpan Expression::span{-1, 1, 100};
-
 Expression::Expression()
   :
   var_map(make_unique<std::unordered_map<std::string, double>>())
@@ -69,4 +67,9 @@ size_t Expression::dimension()
 bool Expression::is_ok()
 {
   return state == EXPR_STATE::OK;
+}
+
+Expression::EXPR_STATE Expression::get_state()
+{
+  return state;
 }

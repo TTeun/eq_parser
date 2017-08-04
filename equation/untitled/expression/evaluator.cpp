@@ -6,12 +6,13 @@ namespace evaluator {
 
   void fill_expr_1D(Expression *expression, Renderable *renderer)
   {
+    renderer->clear();
     if (expression->dimension() > 1 || not expression->is_ok()) {
       qDebug() << "Evaluating expression as 1D but has more variables";
       return;
     }
 
-    renderer->clear();
+    renderer->coords->reserve(Axes::domain.size());
     qDebug() << "Filling renderable with expression";
     std::string var ;
 
@@ -20,8 +21,8 @@ namespace evaluator {
     else
       var = "d"; // dummy variable for constant function
 
-    for (size_t i = 0; i < Expression::span.size(); ++i) {
-      double x = Expression::span.value_at_pos(i);
+    for (size_t i = 0; i < Axes::domain.size(); ++i) {
+      double x = Axes::domain.value_at_pos(i);
       double y = expression->eval_at(var, x );
 //      qDebug() << "(" <<  x << "," << y << ")";
 

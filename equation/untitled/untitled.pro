@@ -21,7 +21,10 @@ SOURCES += main.cpp\
         renderables/renderable.cpp \
     expression/linearspan.cpp \
     expression/evaluator.cpp \
-    renderables/axes.cpp
+    renderables/axes.cpp \
+    expression/range.cpp \
+    exprwidget.cpp \
+    exprlist.cpp
 
 HEADERS  += mainwindow.h \
          glwidget.h \
@@ -33,7 +36,10 @@ HEADERS  += mainwindow.h \
          renderables/renderable.h \
     expression/linearspan.h \
     expression/evaluator.h \
-    renderables/axes.h
+    renderables/axes.h \
+    expression/range.h \
+    exprwidget.h \
+    exprlist.h
 
 FORMS    += mainwindow.ui
 

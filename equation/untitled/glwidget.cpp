@@ -35,11 +35,16 @@ void GLWidget::createShaderPrograms()
   mainShaderProg->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/fragshader.glsl");
   mainShaderProg->link();
 
-  uniform_a = glGetUniformLocation(mainShaderProg->programId(), "a");
-  uniform_b = glGetUniformLocation(mainShaderProg->programId(), "b");
+  uniform_x_min = glGetUniformLocation(mainShaderProg->programId(), "x_min");
+  uniform_x_max = glGetUniformLocation(mainShaderProg->programId(), "x_max");
+  uniform_y_min = glGetUniformLocation(mainShaderProg->programId(), "y_min");
+  uniform_y_max = glGetUniformLocation(mainShaderProg->programId(), "y_max");
 
-  mainShaderProg->setUniformValue(uniform_a, -1.0f);
-  mainShaderProg->setUniformValue(uniform_b, 1.0f);
+  mainShaderProg->setUniformValue(uniform_x_min, -1.0f);
+  mainShaderProg->setUniformValue(uniform_x_max, 1.0f);
+  mainShaderProg->setUniformValue(uniform_y_min, -1.0f);
+  mainShaderProg->setUniformValue(uniform_y_max, 1.0f);
+
 }
 
 void GLWidget::paintGL()
@@ -47,13 +52,11 @@ void GLWidget::paintGL()
   glClearColor(1.0, 1.0, 1.0, 1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  if (renderer->coords->size() != 0)
+    renderRenderable(renderer.get(), mainShaderProg.get(), GL_LINE_STRIP);
+
   renderRenderable(axes->x_axis(), mainShaderProg.get(), GL_LINE_STRIP);
   renderRenderable(axes->y_axis(), mainShaderProg.get(), GL_LINE_STRIP);
-
-  if (renderer->coords->size() == 0)
-    return;
-
-  renderRenderable(renderer.get(), mainShaderProg.get(), GL_LINE_STRIP);
 }
 
 void GLWidget::resizeGL(int w, int h)
@@ -92,14 +95,21 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
 void GLWidget::update_linear_span(double dx, double dy)
 {
-  Q_UNUSED(dy);
-  Expression::span.incr_x(-dx);
+  Axes::domain.incr(-dx);
+  Axes::range.incr(-dy);
 
-  emit linear_span_changed(Expression::span.get_a(), Expression::span.get_b());
+  emit linear_span_changed(
+    Axes::domain.min(),
+    Axes::domain.max(),
+
+    Axes::range.min(),
+    Axes::range.max()
+  );
 
   mainShaderProg->bind();
-  glUniform1f(uniform_a, static_cast<float>(Expression::span.get_a()));
-  glUniform1f(uniform_b, static_cast<float>(Expression::span.get_b()));
+  glUniform1f(uniform_x_min, Axes::domain.min());
+  glUniform1f(uniform_x_max, Axes::domain.max());
+  glUniform1f(uniform_y_min, Axes::range.min());
+  glUniform1f(uniform_y_max, Axes::range.max());
   mainShaderProg->release();
-
 }

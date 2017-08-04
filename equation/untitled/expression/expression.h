@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "linearspan.h"
+#include "range.h"
 #include "../parser/parser.h"
 
 using namespace std;
@@ -35,7 +36,7 @@ class Expression {
     size_t dimension();
     bool is_ok();
 
-    static LinearSpan span;
+    EXPR_STATE get_state();
 
   private:
     EXPR_STATE state = EXPR_STATE::EMPTY;

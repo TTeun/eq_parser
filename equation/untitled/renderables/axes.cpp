@@ -2,6 +2,9 @@
 
 #include "../glwidget.h"
 
+LinearSpan Axes::domain{-1, 1, 5000};
+Range Axes::range{};
+
 Axes::Axes(GLWidget *ui)
   :
   x_axis_m(make_unique<Renderable>(ui)),
@@ -26,10 +29,16 @@ void Axes::registerAxes()
   y_axis_m->registerRenderable();
 }
 
-void Axes::set_ab(double a, double b)
+void Axes::set_domain(double x_min, double x_max)
 {
-  (*x_axis()->coords)[0] = QVector2D(a, 0.0);
-  (*x_axis()->coords)[1] = QVector2D(b, 0.0);
+  (*x_axis()->coords)[0] = QVector2D(x_min, 0.0);
+  (*x_axis()->coords)[1] = QVector2D(x_max, 0.0);
+}
+
+void Axes::set_range(double y_min, double y_max)
+{
+  (*y_axis()->coords)[0] = QVector2D(0.0, y_min);
+  (*y_axis()->coords)[1] = QVector2D(0.0, y_max);
 }
 
 Renderable *Axes::x_axis()
